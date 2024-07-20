@@ -1,0 +1,53 @@
+
+plugins {
+    id 'java'
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'application'
+}
+
+repositories {
+
+    mavenLocal()
+    maven {url = 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/' }
+
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    // if you want to test my 1brc demo with jmh, install first, then use this.
+    //implementation 'com.z.lament.obrc:obrc:1.0'
+
+    // https://mvnrepository.com/artifact/org.openjdk.jmh/jmh-core
+    implementation 'org.openjdk.jmh:jmh-core:1.37'
+
+    // https://mvnrepository.com/artifact/org.openjdk.jmh/jmh-generator-annprocess
+    implementation 'org.openjdk.jmh:jmh-generator-annprocess:1.37'
+
+    // Use JUnit Jupiter for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+
+    // This dependency is used by the application.
+    implementation libs.guava
+}
+
+// Apply a specific Java toolchain to ease working on different environments.
+java {
+//    sourceCompatibility = "21"
+//    targetCompatibility = "21"
+
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'org.example.App'
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
