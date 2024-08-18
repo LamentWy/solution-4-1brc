@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -109,11 +108,6 @@ public class BasicMapMutiThreadDemo {
 			}
 		}
 
-		static int hash(byte[] key) {
-			int h;
-			return (h = Arrays.hashCode(key)) ^ (h >>> 16);
-		}
-
 		static int fnv1a32Hash(byte[] key, int keyLength) {
 			int h = OFFSET_BASIS_32BIT;
 			for (int i = 0; i < keyLength; i++) {
@@ -161,12 +155,10 @@ public class BasicMapMutiThreadDemo {
 
 		private static boolean isSameKey(byte[] key, int keyLength, Entry entry) {
 			return keyLength == entry.keyLength && eq(key, entry.key);
-			//return keyLength == entry.keyLength && Arrays.equals(key, entry.key);
 		}
 
 
 		private static boolean eq(byte[] a, byte[] b) {
-
 			ByteVector byteVector1 = ByteVector.fromArray(ByteVector.SPECIES_256, a, 0);
 			ByteVector byteVector2 = ByteVector.fromArray(ByteVector.SPECIES_256, b, 0);
 			VectorMask<Byte> eq = byteVector1.eq(byteVector2);
@@ -174,19 +166,7 @@ public class BasicMapMutiThreadDemo {
 			int misIdx = eq.not().firstTrue();
 
 			return misIdx == 32;
-
-			//return eq.allTrue();
 		}
-
-
-		public Entry.Data get(byte[] key) {
-			Entry entry = table[hash(key) & (table.length - 1)];
-			while (!eq(key, entry.key)) {
-				entry = entry.next;
-			}
-			return entry.data;
-		}
-
 	}
 
 	private static void process(String path, int blockNum) throws IOException {

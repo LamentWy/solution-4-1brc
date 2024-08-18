@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -104,11 +103,6 @@ public class BasicMapDemo {
 			}
 		}
 
-		static int hash(byte[] key) {
-			int h;
-			return (h = Arrays.hashCode(key)) ^ (h >>> 16);
-		}
-
 		static int fnv1a32Hash(byte[] key, int keyLength) {
 			int h = OFFSET_BASIS_32BIT;
 			for (int i = 0; i < keyLength; i++) {
@@ -119,8 +113,7 @@ public class BasicMapDemo {
 
 		public void put(byte[] key, int keyLength, Entry.Data value) {
 
-			int hash = hash(key);
-			// int hash = fnv1a32Hash(key,keyLength);
+			int hash = fnv1a32Hash(key,keyLength);
 
 			int index = hash & (table.length - 1);
 			Entry entry = table[index];
@@ -156,7 +149,6 @@ public class BasicMapDemo {
 
 		private static boolean isSameKey(byte[] key, int keyLength, Entry entry) {
 			return keyLength == entry.keyLength && eq(key, entry.key);
-		//	return keyLength == entry.keyLength && Arrays.equals(key, entry.key);
 		}
 
 
@@ -169,18 +161,7 @@ public class BasicMapDemo {
 			int misIdx = eq.not().firstTrue();
 
 			return misIdx == 32;
-
-			//return eq.allTrue();
 		}
-
-
-//		public Entry.Data get(byte[] key) {
-//			Entry entry = table[hash(key) & (table.length - 1)];
-//			while (!eq(key, entry.key)){
-//				entry = entry.next;
-//			}
-//			return entry.data;
-//		}
 
 	}
 
