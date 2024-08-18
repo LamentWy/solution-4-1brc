@@ -328,9 +328,9 @@ public class BasicMapMutiThreadDemo {
 	}
 
 	public static void main(String[] args) throws IOException {
-//		long start = System.currentTimeMillis();
+		long start = System.currentTimeMillis();
 		process(PATH, 400);
-//		long end = System.currentTimeMillis();
-//		System.out.printf("cost: %s ms%n", end - start);
+		long end = System.currentTimeMillis();
+		System.out.printf("cost: %s ms%n", end - start);
 	}
 }

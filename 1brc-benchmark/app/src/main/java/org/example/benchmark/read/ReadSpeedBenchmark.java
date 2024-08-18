@@ -1,4 +1,4 @@
-package org.example.benchmark;
+package org.example.benchmark.read;
 
 
 import java.io.IOException;

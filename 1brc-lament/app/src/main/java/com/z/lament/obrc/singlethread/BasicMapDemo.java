@@ -119,7 +119,9 @@ public class BasicMapDemo {
 
 		public void put(byte[] key, int keyLength, Entry.Data value) {
 
-			int hash = fnv1a32Hash(key,keyLength);
+			int hash = hash(key);
+			// int hash = fnv1a32Hash(key,keyLength);
+
 			int index = hash & (table.length - 1);
 			Entry entry = table[index];
 
@@ -154,7 +156,7 @@ public class BasicMapDemo {
 
 		private static boolean isSameKey(byte[] key, int keyLength, Entry entry) {
 			return keyLength == entry.keyLength && eq(key, entry.key);
-//			return keyLength == entry.keyLength && Arrays.equals(key, entry.key);
+		//	return keyLength == entry.keyLength && Arrays.equals(key, entry.key);
 		}
 
 
@@ -172,20 +174,20 @@ public class BasicMapDemo {
 		}
 
 
-		public Entry.Data get(byte[] key) {
-			Entry entry = table[hash(key) & (table.length - 1)];
-			while (!eq(key, entry.key)){
-				entry = entry.next;
-			}
-			return entry.data;
-		}
+//		public Entry.Data get(byte[] key) {
+//			Entry entry = table[hash(key) & (table.length - 1)];
+//			while (!eq(key, entry.key)){
+//				entry = entry.next;
+//			}
+//			return entry.data;
+//		}
 
 	}
 
 
 	public static void main(String[] args) throws IOException {
 		long start = System.currentTimeMillis();
-		process(PATH,200);
+		process(PATH,400);
 		long end = System.currentTimeMillis();
 		System.out.printf("cost: %s ms%n", end - start);
 	}
