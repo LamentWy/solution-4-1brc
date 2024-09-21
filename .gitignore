@@ -3,6 +3,12 @@ measurements.txt
 *.result
 files/
 
+# arthas
+arthas-output
+
+# graalVM
+graal_dumps
+
 # idea
 .idea
 out
